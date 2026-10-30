@@ -1,0 +1,170 @@
+.rc-footer-wrapper {
+  width: 100%;
+  background-color: #1e2d4d;
+  position: relative;
+  overflow: hidden;
+  margin-top: auto;
+}
+
+.rc-footer-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  line-height: 0;
+}
+
+.rc-footer-img {
+  width: 100%;
+  height: auto;
+  min-height: 90px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Invisible clickable overlay positioning */
+.rc-invisible-link {
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  border: none;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Row 1: Top Nav (Top 0 - 24% of height) --- */
+/* RTL: Right to Left */
+.rc-nav-home {
+  right: 21%;
+  top: 4%;
+  width: 4%;
+  height: 18%;
+}
+
+.rc-nav-verify {
+  right: 26%;
+  top: 4%;
+  width: 9%;
+  height: 18%;
+}
+
+.rc-nav-faq {
+  right: 36%;
+  top: 4%;
+  width: 7%;
+  height: 18%;
+}
+
+.rc-nav-complaints {
+  right: 44%;
+  top: 4%;
+  width: 9%;
+  height: 18%;
+}
+
+.rc-nav-contact {
+  right: 54%;
+  top: 4%;
+  width: 5%;
+  height: 18%;
+}
+
+.rc-nav-branches {
+  right: 60%;
+  top: 4%;
+  width: 6%;
+  height: 18%;
+}
+
+.rc-nav-interests {
+  right: 67%;
+  top: 4%;
+  width: 7%;
+  height: 18%;
+}
+
+.rc-nav-sla {
+  right: 75%;
+  top: 4%;
+  width: 8%;
+  height: 18%;
+}
+
+/* --- Row 2: Bottom Section (25% - 100% of height) --- */
+/* Riyadh Chamber Logo on Left */
+.rc-footer-logo {
+  left: 10%;
+  top: 30%;
+  width: 16%;
+  height: 50%;
+}
+
+/* Phone number 920004565 (center) */
+.rc-footer-phone {
+  left: 44%;
+  top: 42%;
+  width: 12%;
+  height: 22%;
+}
+
+/* App Store (center bottom) */
+.rc-footer-appstore {
+  left: 40%;
+  top: 70%;
+  width: 9%;
+  height: 25%;
+}
+
+/* Google Play (center bottom) */
+.rc-footer-googleplay {
+  left: 50%;
+  top: 70%;
+  width: 9%;
+  height: 25%;
+}
+
+/* Social icons on Right */
+/* Order from left to right: YouTube, LinkedIn, Facebook, Google+, Twitter */
+.rc-social-youtube {
+  right: 25.5%;
+  top: 30%;
+  width: 2.8%;
+  height: 28%;
+}
+
+.rc-social-linkedin {
+  right: 22.5%;
+  top: 30%;
+  width: 2.8%;
+  height: 28%;
+}
+
+.rc-social-facebook {
+  right: 19.5%;
+  top: 30%;
+  width: 2.8%;
+  height: 28%;
+}
+
+.rc-social-googleplus {
+  right: 16.5%;
+  top: 30%;
+  width: 2.8%;
+  height: 28%;
+}
+
+.rc-social-twitter {
+  right: 13.5%;
+  top: 30%;
+  width: 2.8%;
+  height: 28%;
+}
+
+@media (max-width: 768px) {
+  .rc-footer-img {
+    height: 120px;
+    object-fit: cover;
+  }
+}

@@ -1,0 +1,66 @@
+.notfound-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.notfound-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f2f5;
+  padding: 40px 20px;
+}
+
+.notfound-card {
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  padding: 60px 80px;
+  text-align: center;
+  direction: rtl;
+  max-width: 450px;
+  width: 100%;
+}
+
+.notfound-code {
+  font-size: 80px;
+  font-weight: 900;
+  color: #1e2d4d;
+  line-height: 1;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.notfound-title {
+  font-family: 'Cairo', Arial, sans-serif;
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.notfound-desc {
+  font-family: 'Cairo', Arial, sans-serif;
+  font-size: 14px;
+  color: #777;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.notfound-btn {
+  display: inline-block;
+  padding: 11px 30px;
+  background-color: #7a9ab5;
+  color: white;
+  border-radius: 3px;
+  text-decoration: none;
+  font-family: 'Cairo', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.notfound-btn:hover {
+  background-color: #6b8fa8;
+}

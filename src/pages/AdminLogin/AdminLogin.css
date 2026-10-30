@@ -1,0 +1,113 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background-color: #f0f2f5;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8d0dc' fill-opacity='0.18'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.login-card {
+  background: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  padding: 45px 50px;
+  width: 100%;
+  max-width: 420px;
+  direction: rtl;
+  text-align: right;
+  border-top: 4px solid #1e2d4d;
+}
+
+.login-title {
+  font-family: 'Cairo', Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e2d4d;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.login-subtitle {
+  font-family: 'Cairo', Arial, sans-serif;
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-family: 'Cairo', Arial, sans-serif;
+  font-size: 13px;
+  color: #444;
+  font-weight: 600;
+}
+
+.form-input {
+  padding: 10px 14px;
+  border: 1px solid #d0d0d0;
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: 'Cairo', Arial, sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fafafa;
+}
+
+.form-input:focus {
+  border-color: #1e2d4d;
+  background: #fff;
+}
+
+.error-message {
+  background-color: #fff0f0;
+  border: 1px solid #ffcccc;
+  color: #c0392b;
+  padding: 10px 14px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-family: 'Cairo', Arial, sans-serif;
+  text-align: center;
+}
+
+.login-btn {
+  padding: 12px 20px;
+  background-color: #7a9ab5;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  font-size: 15px;
+  font-family: 'Cairo', Arial, sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 6px;
+}
+
+.login-btn:hover {
+  background-color: #6b8fa8;
+}
+
+.login-btn:disabled {
+  background-color: #a0b8cc;
+  cursor: not-allowed;
+}
