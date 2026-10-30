@@ -19,11 +19,9 @@
 .rc-header-img {
   width: 100%;
   height: auto;
-  min-height: 55px;
-  max-height: 90px;
-  object-fit: cover;
-  object-position: center;
+  min-height: 48px;
   display: block;
+  object-fit: contain;
 }
 
 /* Invisible clickable overlay positioning */
@@ -39,26 +37,26 @@
 
 /* Link: بوابة أعمالي (left side) */
 .rc-link-aamal {
-  left: 8%;
-  top: 15%;
-  width: 18%;
-  height: 70%;
+  left: 6%;
+  top: 10%;
+  width: 22%;
+  height: 80%;
 }
 
 /* Link: Riyadh Chamber Logo (center) */
 .rc-link-center-logo {
-  left: 42%;
-  top: 10%;
-  width: 16%;
-  height: 80%;
+  left: 40%;
+  top: 5%;
+  width: 20%;
+  height: 90%;
 }
 
 /* Link: E-Services (right side) */
 .rc-link-eservices {
-  right: 8%;
-  top: 15%;
-  width: 20%;
-  height: 70%;
+  right: 6%;
+  top: 10%;
+  width: 24%;
+  height: 80%;
 }
 
 /* Bottom border line */
@@ -68,9 +66,8 @@
   background: linear-gradient(90deg, #3d607a 0%, #5887aa 50%, #3d607a 100%);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .rc-header-img {
-    height: 60px;
-    object-fit: cover;
+    min-height: 40px;
   }
 }

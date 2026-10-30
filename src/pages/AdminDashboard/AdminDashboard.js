@@ -12,14 +12,10 @@ import {
   query,
   orderBy
 } from 'firebase/firestore';
-import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  deleteObject
-} from 'firebase/storage';
+import { ref, deleteObject } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import { clearAdminSession } from '../../utils/authSecurity';
+import { uploadDocument } from '../../utils/documentStorage';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import './AdminDashboard.css';
@@ -29,7 +25,7 @@ const emptyForm = {
   nationalNumber: '',
   memberNumber: '',
   documentNumber: '',
-  status: 'Certified', // 'Certified' or 'Uncertified'
+  status: 'Certified',
   pdfUrl: '',
 };
 
@@ -41,13 +37,11 @@ function AdminDashboard() {
   const [form, setForm] = useState(emptyForm);
 
   // PDF Handling
-  const [, setPdfFile] = useState(null);
-  const [pdfFileName, setPdfFileName] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [displayFileName, setDisplayFileName] = useState('');
   const [uploadPercent, setUploadPercent] = useState(0);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [uploadedDownloadUrl, setUploadedDownloadUrl] = useState('');
-  const [uploadedStoragePath, setUploadedStoragePath] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadComplete, setUploadComplete] = useState(false);
 
   const [saving, setSaving] = useState(false);
   const [formError, setFormError] = useState('');
@@ -87,7 +81,7 @@ function AdminDashboard() {
   const openAddModal = () => {
     setEditId(null);
     setForm(emptyForm);
-    resetPdfState();
+    resetUploadState();
     setFormError('');
     setShowModal(true);
   };
@@ -102,35 +96,29 @@ function AdminDashboard() {
       status: record.status === 'Uncertified' || record.status === 'غير مصدقة' ? 'Uncertified' : 'Certified',
       pdfUrl: record.pdfUrl || '',
     });
-    resetPdfState();
+    resetUploadState();
     if (record.pdfUrl) {
-      setUploadedDownloadUrl(record.pdfUrl);
-      setUploadedStoragePath(record.pdfPath || '');
-      setPdfFileName(record.pdfName || 'مستند مرفق حالياً');
-      setUploadSuccess(true);
+      setDisplayFileName(record.pdfName || 'المستند الحالي مرفق');
+      setUploadComplete(true);
     }
     setFormError('');
     setShowModal(true);
   };
 
-  const resetPdfState = () => {
-    setPdfFile(null);
-    setPdfFileName('');
-    setIsUploading(false);
+  const resetUploadState = () => {
+    setSelectedFile(null);
+    setDisplayFileName('');
     setUploadPercent(0);
-    setUploadSuccess(false);
-    setUploadedDownloadUrl('');
-    setUploadedStoragePath('');
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    setIsUploading(false);
+    setUploadComplete(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const closeModal = () => {
     setShowModal(false);
     setEditId(null);
     setForm(emptyForm);
-    resetPdfState();
+    resetUploadState();
     setFormError('');
     setSaving(false);
   };
@@ -140,10 +128,10 @@ function AdminDashboard() {
   };
 
   /**
-   * PDF Selection: Instantly uploads to Firebase Storage
-   * Shows smooth progress bar and enables Save as soon as ready.
+   * Simple, user-friendly file selection:
+   * Instant feedback, no technical jargon.
    */
-  const handlePdfSelect = (e) => {
+  const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -153,50 +141,13 @@ function AdminDashboard() {
     }
 
     setFormError('');
-    setPdfFile(file);
-    setPdfFileName(file.name);
-    setIsUploading(true);
-    setUploadPercent(0);
-    setUploadSuccess(false);
-
-    // Upload immediately to Firebase Storage
-    const storagePath = `pdfs/${Date.now()}_${file.name}`;
-    const storageRef = ref(storage, storagePath);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setUploadPercent(progress);
-      },
-      (error) => {
-        console.error('Firebase Storage upload error:', error);
-        setIsUploading(false);
-        setFormError(
-          'تعذر رفع الملف إلى Firebase Storage. يرجى التأكد من اتصال الإنترنت أو إدخال رابط مباشر.'
-        );
-      },
-      async () => {
-        try {
-          const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-          setUploadedDownloadUrl(downloadUrl);
-          setUploadedStoragePath(storagePath);
-          setUploadSuccess(true);
-          setIsUploading(false);
-        } catch (urlErr) {
-          console.error('Error fetching download URL:', urlErr);
-          setIsUploading(false);
-          setFormError('حدث خطأ أثناء الحصول على رابط المستند.');
-        }
-      }
-    );
+    setSelectedFile(file);
+    setDisplayFileName(file.name);
+    setUploadComplete(true); // Ready for instant save
   };
 
   /**
-   * Save record to Firebase Firestore
+   * Save record and upload document smoothly in background
    */
   const handleSaveRecord = async (e) => {
     e.preventDefault();
@@ -207,16 +158,25 @@ function AdminDashboard() {
       return;
     }
 
-    if (isUploading) {
-      setFormError('يرجى الانتظار حتى اكتمال رفع ملف PDF.');
-      return;
-    }
-
     setSaving(true);
+    setIsUploading(Boolean(selectedFile));
 
     try {
-      const finalPdfUrl = uploadedDownloadUrl || form.pdfUrl.trim();
-      const finalPdfName = pdfFileName || (finalPdfUrl ? 'Document.pdf' : '');
+      let finalPdfUrl = form.pdfUrl.trim();
+      let finalPdfPath = '';
+      let finalPdfName = displayFileName;
+
+      if (selectedFile) {
+        const uploadResult = await uploadDocument(
+          selectedFile,
+          editId || `doc_${Date.now()}`,
+          (pct) => setUploadPercent(pct)
+        );
+
+        finalPdfUrl = uploadResult.pdfUrl;
+        finalPdfPath = uploadResult.pdfPath || '';
+        finalPdfName = uploadResult.fileName;
+      }
 
       if (editId) {
         // Update existing record
@@ -225,14 +185,14 @@ function AdminDashboard() {
           nationalNumber: form.nationalNumber.trim(),
           memberNumber: form.memberNumber.trim(),
           documentNumber: form.documentNumber.trim(),
-          status: form.status, // Certified or Uncertified
-          pdfUrl: finalPdfUrl,
-          pdfName: finalPdfName,
+          status: form.status,
           updatedAt: serverTimestamp(),
         };
 
-        if (uploadedStoragePath) {
-          updatePayload.pdfPath = uploadedStoragePath;
+        if (finalPdfUrl) {
+          updatePayload.pdfUrl = finalPdfUrl;
+          updatePayload.pdfName = finalPdfName;
+          if (finalPdfPath) updatePayload.pdfPath = finalPdfPath;
         }
 
         await updateDoc(doc(db, 'records', editId), updatePayload);
@@ -243,9 +203,9 @@ function AdminDashboard() {
           nationalNumber: form.nationalNumber.trim(),
           memberNumber: form.memberNumber.trim(),
           documentNumber: form.documentNumber.trim(),
-          status: form.status, // Certified or Uncertified
+          status: form.status,
           pdfUrl: finalPdfUrl,
-          pdfPath: uploadedStoragePath || '',
+          pdfPath: finalPdfPath,
           pdfName: finalPdfName,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
@@ -257,10 +217,11 @@ function AdminDashboard() {
       closeModal();
       fetchRecords();
     } catch (err) {
-      console.error('Error saving record to Firestore:', err);
-      setFormError('حدث خطأ أثناء حفظ المعاملة: ' + (err.message || 'حاول مرة أخرى'));
+      console.error('Error saving record:', err);
+      setFormError('تعذر حفظ المعاملة. يرجى المحاولة مرة أخرى.');
     } finally {
       setSaving(false);
+      setIsUploading(false);
     }
   };
 
@@ -302,7 +263,7 @@ function AdminDashboard() {
       <Header />
 
       <main className="adm-main-body">
-        {/* Navigation & Header Section */}
+        {/* Header Panel */}
         <div className="adm-header-panel" dir="rtl">
           <div className="adm-header-info">
             <h1 className="adm-main-heading">لوحة تحكم إدارة المعاملات</h1>
@@ -339,7 +300,7 @@ function AdminDashboard() {
           </div>
         </div>
 
-        {/* Search Bar */}
+        {/* Filter Toolbar */}
         <div className="adm-filter-bar" dir="rtl">
           <div className="adm-search-container">
             <input
@@ -355,7 +316,7 @@ function AdminDashboard() {
           </div>
         </div>
 
-        {/* Records Table */}
+        {/* Table View */}
         <div className="adm-table-card">
           {loading ? (
             <div className="adm-loader" dir="rtl">
@@ -402,13 +363,13 @@ function AdminDashboard() {
                           <td>
                             {record.pdfUrl ? (
                               <a
-                                href={record.pdfUrl}
+                                href={`/record/${record.id}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="adm-pdf-badge"
-                                title="عرض المستند في نافذة جديدة"
+                                title="عرض المستند في صفحة المعاملة"
                               >
-                                📄 عرض PDF
+                                📄 مستند مرفق
                               </a>
                             ) : (
                               <span className="adm-no-doc">لا يوجد</span>
@@ -555,48 +516,44 @@ function AdminDashboard() {
                 </div>
               </div>
 
-              {/* PDF Document Upload Area */}
+              {/* Streamlined Simple PDF Upload Area */}
               <div className="adm-form-group">
-                <label className="adm-label">مستند الخطاب / Letter PDF Document</label>
-                
+                <label className="adm-label">مستند الخطاب / Document PDF</label>
+
                 <div
-                  className={`adm-upload-box ${isUploading ? 'uploading-active' : ''} ${uploadSuccess ? 'upload-done' : ''}`}
-                  onClick={() => !isUploading && fileInputRef.current && fileInputRef.current.click()}
+                  className={`adm-upload-box ${uploadComplete ? 'upload-done' : ''}`}
+                  onClick={() => fileInputRef.current && fileInputRef.current.click()}
                 >
                   <input
                     type="file"
                     ref={fileInputRef}
                     accept="application/pdf"
                     style={{ display: 'none' }}
-                    onChange={handlePdfSelect}
-                    disabled={isUploading}
+                    onChange={handleFileSelect}
                   />
 
                   <div className="upload-box-content">
                     <span className="upload-box-icon">
-                      {uploadSuccess ? '✅' : isUploading ? '⏳' : '📁'}
+                      {uploadComplete ? '✅' : '📁'}
                     </span>
                     <p className="upload-box-text">
-                      {isUploading
-                        ? `جاري الرفع إلى Firebase Storage (${uploadPercent}%)...`
-                        : uploadSuccess
-                        ? `تم رفع الملف بنجاح: ${pdfFileName}`
+                      {displayFileName
+                        ? `تم اختيار الملف: ${displayFileName}`
                         : 'انقر هنا لاختيار ملف PDF من جهازك'}
                     </p>
                     <span className="upload-box-note">
-                      يتم الرفع والتخزين سحابياً في Firebase Storage تلقائياً
+                      سيتم حفظ المستند تلقائياً مع المعاملة
                     </span>
                   </div>
 
-                  {/* Progress Bar */}
                   {isUploading && (
                     <div className="adm-upload-progress-bar">
-                      <div className="progress-fill" style={{ width: `${uploadPercent}%` }}></div>
+                      <div className="progress-fill" style={{ width: `${uploadPercent || 70}%` }}></div>
                     </div>
                   )}
                 </div>
 
-                {/* Direct URL Alternative (Optional) */}
+                {/* Direct Document URL Option */}
                 <div className="adm-direct-link-row">
                   <label className="adm-direct-label">أو ضع رابط مستند مباشر (Direct Link):</label>
                   <input
@@ -607,7 +564,6 @@ function AdminDashboard() {
                     onChange={handleFormChange}
                     placeholder="https://.../letter.pdf"
                     dir="ltr"
-                    disabled={isUploading}
                   />
                 </div>
               </div>
@@ -619,15 +575,9 @@ function AdminDashboard() {
                 <button
                   type="submit"
                   className="adm-btn adm-btn-submit"
-                  disabled={saving || isUploading}
+                  disabled={saving}
                 >
-                  {saving
-                    ? 'جاري الحفظ في Firestore...'
-                    : isUploading
-                    ? 'جاري رفع PDF...'
-                    : editId
-                    ? 'تحديث المعاملة'
-                    : 'حفظ المعاملة'}
+                  {saving ? 'جاري حفظ المعاملة...' : editId ? 'تحديث المعاملة' : 'حفظ المعاملة'}
                 </button>
                 <button
                   type="button"
@@ -651,7 +601,7 @@ function AdminDashboard() {
             <h3 className="confirm-box-title">تأكيد حذف المعاملة</h3>
             <p className="confirm-box-text">
               هل أنت متأكد من رغبتك في حذف معاملة <strong>"{deleteConfirm.organizationName}"</strong>؟
-              سيتم إزالة السجل من قاعدة البيانات بشكل نهائي.
+              سيتم إزالة السجل نهائياً.
             </p>
             <div className="adm-modal-footer">
               <button

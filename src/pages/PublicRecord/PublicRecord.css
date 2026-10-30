@@ -9,6 +9,7 @@
     radial-gradient(circle at 90% 80%, rgba(225, 232, 240, 0.5) 0%, transparent 40%),
     linear-gradient(135deg, #f5f7fa 0%, #edf1f7 100%);
   position: relative;
+  overflow-x: hidden;
 }
 
 /* Content Container */
@@ -19,6 +20,8 @@
   justify-content: center;
   padding: 40px 16px;
   position: relative;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 /* Verification Card - Exact match from screenshot */
@@ -69,6 +72,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .field-bilingual-label {
@@ -77,6 +82,7 @@
   color: #637381;
   font-weight: 400;
   letter-spacing: 0.1px;
+  word-break: break-word;
 }
 
 .field-bold-value {
@@ -85,11 +91,14 @@
   font-weight: 700;
   color: #111827;
   letter-spacing: 0.2px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .organization-value {
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* Status Badge - Exactly matching screenshot: light green border & text */
@@ -132,6 +141,7 @@
   align-items: center;
   justify-content: center;
   width: 195px;
+  max-width: 100%;
   height: 42px;
   background-color: #68889e;
   color: #ffffff;
@@ -159,13 +169,14 @@
 /* Loading & Not Found States */
 .public-status-card {
   background: #ffffff;
-  padding: 40px 50px;
+  padding: 40px 30px;
   border-radius: 4px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
   text-align: center;
   max-width: 420px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .status-icon {
@@ -201,11 +212,98 @@
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 640px) {
-  .riyadh-verification-card {
-    padding: 24px 20px 28px;
+/* --- MOBILE & TABLET RESPONSIVENESS --- */
+@media (max-width: 768px) {
+  .public-content-container {
+    padding: 24px 12px;
   }
+
+  .riyadh-verification-card {
+    padding: 26px 24px 30px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+  }
+
   .verification-title {
     font-size: 16px;
+  }
+
+  .verification-fields-list {
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .field-bilingual-label {
+    font-size: 12px;
+  }
+
+  .field-bold-value {
+    font-size: 14px;
+  }
+
+  .organization-value {
+    font-size: 15px;
+  }
+
+  .letter-action-container {
+    margin-top: 26px;
+  }
+
+  .letter-action-btn {
+    width: 100%;
+    max-width: 260px;
+    height: 44px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .public-content-container {
+    padding: 16px 10px;
+  }
+
+  .riyadh-verification-card {
+    padding: 20px 16px 24px;
+    border-radius: 4px;
+  }
+
+  .verification-card-header {
+    margin-bottom: 16px;
+  }
+
+  .verification-title {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .verification-fields-list {
+    gap: 13px;
+    margin-top: 14px;
+  }
+
+  .field-bilingual-label {
+    font-size: 11.5px;
+  }
+
+  .field-bold-value {
+    font-size: 13.5px;
+  }
+
+  .organization-value {
+    font-size: 14px;
+  }
+
+  .verified-status-badge {
+    font-size: 12.5px;
+    padding: 2px 10px;
+  }
+
+  .letter-action-container {
+    margin-top: 22px;
+  }
+
+  .letter-action-btn {
+    width: 100%;
+    max-width: 100%;
+    height: 44px;
   }
 }

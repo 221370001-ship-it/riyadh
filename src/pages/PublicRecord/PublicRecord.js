@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
+import { getPdfFromFirestore } from '../../utils/documentStorage';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import './PublicRecord.css';
@@ -11,6 +12,7 @@ function PublicRecord() {
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [resolvingPdf, setResolvingPdf] = useState(false);
 
   useEffect(() => {
     const fetchRecord = async () => {
@@ -32,11 +34,52 @@ function PublicRecord() {
     fetchRecord();
   }, [recordId]);
 
-  const handleLetterClick = () => {
-    if (record && record.pdfUrl) {
-      window.open(record.pdfUrl, '_blank', 'noopener,noreferrer');
-    } else {
+  const handleLetterClick = async () => {
+    if (!record || !record.pdfUrl) {
       alert('لا يوجد ملف PDF مرتبط بهذه المعاملة');
+      return;
+    }
+
+    // Direct HTTP URL
+    if (record.pdfUrl.startsWith('http://') || record.pdfUrl.startsWith('https://')) {
+      window.open(record.pdfUrl, '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    // Direct Data URI
+    if (record.pdfUrl.startsWith('data:application/pdf')) {
+      const win = window.open();
+      if (win) {
+        win.document.write(
+          `<iframe src="${record.pdfUrl}" frameborder="0" style="border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>`
+        );
+        win.document.title = record.pdfName || 'مستند المعاملة';
+      }
+      return;
+    }
+
+    // Handled via secure Firestore storage
+    if (record.pdfUrl.startsWith('firestore:')) {
+      setResolvingPdf(true);
+      try {
+        const base64Data = await getPdfFromFirestore(recordId);
+        if (base64Data) {
+          const win = window.open();
+          if (win) {
+            win.document.write(
+              `<iframe src="${base64Data}" frameborder="0" style="border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>`
+            );
+            win.document.title = record.pdfName || 'مستند المعاملة';
+          }
+        } else {
+          alert('تعذر فتح ملف المستند.');
+        }
+      } catch (e) {
+        console.error('PDF resolution error:', e);
+        alert('حدث خطأ أثناء تحميل المستند.');
+      } finally {
+        setResolvingPdf(false);
+      }
     }
   };
 
@@ -114,25 +157,28 @@ function PublicRecord() {
                 <div className="status-badge-container">
                   <span
                     className={`verified-status-badge ${
-                      record.status === 'غير مصدقة' || record.status === 'Uncertified'
+                      record.status === 'Uncertified' || record.status === 'غير مصدقة'
                         ? 'status-uncertified'
                         : 'status-certified'
                     }`}
                   >
-                    {record.status || 'مصدقة'}
+                    {record.status === 'Uncertified' || record.status === 'غير مصدقة'
+                      ? 'Uncertified'
+                      : 'Certified'}
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Letter / خطاب Button */}
+            {/* Letter / خطاب Action Button */}
             <div className="letter-action-container">
               <button
                 type="button"
                 className="letter-action-btn"
                 onClick={handleLetterClick}
+                disabled={resolvingPdf}
               >
-                خطاب / Letter
+                {resolvingPdf ? 'جاري فتح المستند...' : 'خطاب / Letter'}
               </button>
             </div>
           </div>
