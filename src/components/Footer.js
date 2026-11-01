@@ -32,7 +32,7 @@ function Footer({ links = FOOTER_LINKS }) {
     <footer className="rc-footer-wrapper">
       {/* ========================================================
           1. DESKTOP FOOTER (> 768px)
-          Preserved exactly as approved with desktop image & overlays
+          Original approved layout preserved 100%
          ======================================================== */}
       <div className="rc-footer-desktop">
         <div className="rc-footer-container">
@@ -184,7 +184,7 @@ function Footer({ links = FOOTER_LINKS }) {
 
       {/* ========================================================
           2. MOBILE RESPONSIVE FOOTER (<= 768px)
-          Matches user reference screenshot (media_1793553725705_0f1ab849)
+          Matches reference screenshot (media_1793557726195_2313acd3)
          ======================================================== */}
       <div className="rc-footer-mobile">
         {/* Navigation Links in Rows */}
@@ -331,7 +331,7 @@ function Footer({ links = FOOTER_LINKS }) {
           </a>
         </div>
 
-        {/* App Badges: App Store & Google Play */}
+        {/* App Badges: HD Badges provided by user */}
         <div className="rc-mobile-badges-row">
           <a
             href={links.appStore}
@@ -341,7 +341,7 @@ function Footer({ links = FOOTER_LINKS }) {
             title="تنزيل من App Store"
           >
             <img
-              src="/assets/mobile-badge-appstore.png"
+              src="/assets/appstore-hd-tight.png"
               alt="تنزيل من App Store"
               className="rc-mobile-badge-img"
             />
@@ -355,7 +355,7 @@ function Footer({ links = FOOTER_LINKS }) {
             title="احصل عليه من Google Play"
           >
             <img
-              src="/assets/mobile-badge-googleplay.png"
+              src="/assets/googleplay-hd-tight.png"
               alt="احصل عليه من Google Play"
               className="rc-mobile-badge-img"
             />

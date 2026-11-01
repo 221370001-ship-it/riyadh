@@ -13,64 +13,52 @@ function Header({ links = HEADER_LINKS }) {
     <header className="rc-header-wrapper">
       {/* ========================================================
           1. DESKTOP HEADER (> 768px)
-          Uses official logos provided by user:
-          Left: بوابة أعمالي
-          Center: غرفة الرياض / Riyadh Chamber
-          Right: الخدمات الإلكترونية / E-SERVICES
+          Original approved layout preserved 100%
          ======================================================== */}
       <div className="rc-header-desktop">
-        <div className="rc-header-desktop-content">
-          {/* Left: بوابة أعمالي */}
+        <div className="rc-header-container">
+          <img
+            src="/assets/header.png"
+            alt="Riyadh Chamber Header"
+            className="rc-header-img"
+          />
+
+          {/* 1. Left: بوابة أعمالي */}
           <a
             href={links.aamalPortal}
             target="_blank"
             rel="noopener noreferrer"
-            className="rc-desktop-logo-link"
+            className="rc-invisible-link rc-link-aamal"
             title="بوابة أعمالي"
-          >
-            <img
-              src="/assets/aamal-logo-tight.png"
-              alt="بوابة أعمالي"
-              className="rc-desktop-logo rc-desktop-logo-aamal"
-            />
-          </a>
+            aria-label="بوابة أعمالي"
+          />
 
-          {/* Center: Riyadh Chamber Logo */}
+          {/* 2. Center: Riyadh Chamber Logo */}
           <a
             href={links.riyadhChamber}
             target="_blank"
             rel="noopener noreferrer"
-            className="rc-desktop-logo-link"
+            className="rc-invisible-link rc-link-center-logo"
             title="غرفة الرياض - Riyadh Chamber"
-          >
-            <img
-              src="/assets/chamber-logo-tight.png"
-              alt="غرفة الرياض - Riyadh Chamber"
-              className="rc-desktop-logo rc-desktop-logo-chamber"
-            />
-          </a>
+            aria-label="غرفة الرياض"
+          />
 
-          {/* Right: E-Services */}
+          {/* 3. Right: E-Services */}
           <a
             href={links.eServices}
             target="_blank"
             rel="noopener noreferrer"
-            className="rc-desktop-logo-link"
+            className="rc-invisible-link rc-link-eservices"
             title="الخدمات الإلكترونية - E-SERVICES"
-          >
-            <img
-              src="/assets/eservices-logo-tight.png"
-              alt="الخدمات الإلكترونية - E-SERVICES"
-              className="rc-desktop-logo rc-desktop-logo-eservices"
-            />
-          </a>
+            aria-label="الخدمات الإلكترونية"
+          />
         </div>
         <div className="rc-header-bottom-bar" />
       </div>
 
       {/* ========================================================
           2. MOBILE RESPONSIVE HEADER (<= 768px)
-          Matches reference screenshot (media_1793556630049_2440a4e9)
+          Exact match to reference screenshot (media_1793557726211_8b106019)
          ======================================================== */}
       <div className="rc-header-mobile">
         <div className="rc-mobile-top-bar">
@@ -117,7 +105,7 @@ function Header({ links = HEADER_LINKS }) {
           </a>
         </div>
 
-        {/* Separator Line */}
+        {/* Bottom Accent Line */}
         <div className="rc-mobile-bottom-bar" />
       </div>
     </header>

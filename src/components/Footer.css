@@ -8,7 +8,6 @@
 
 /* =========================================================
    1. DESKTOP FOOTER (> 768px)
-   Preserved exactly as approved with desktop image & overlays
    ========================================================= */
 .rc-footer-desktop {
   display: block;
@@ -166,8 +165,8 @@
 }
 
 /* =========================================================
-   2. MOBILE RESPONSIVE FOOTER (hidden on desktop)
-   Matches user reference screenshot (media_1793553725705_0f1ab849)
+   2. MOBILE RESPONSIVE FOOTER (<= 768px)
+   Matches user reference screenshot (media_1793557726195_2313acd3)
    ========================================================= */
 .rc-footer-mobile {
   display: none;
@@ -202,7 +201,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px 24px;
+    gap: 18px 24px;
     width: 100%;
   }
 
@@ -296,25 +295,27 @@
     display: block;
   }
 
-  /* App Badges side-by-side */
+  /* App Badges side-by-side using HD user-provided images */
   .rc-mobile-badges-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     margin-bottom: 12px;
   }
 
   .rc-mobile-badge-link {
     display: inline-flex;
     text-decoration: none;
+    max-width: 48%;
   }
 
   .rc-mobile-badge-img {
-    height: 44px;
+    height: 48px;
     width: auto;
+    max-width: 160px;
     object-fit: contain;
     border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    display: block;
   }
 }
