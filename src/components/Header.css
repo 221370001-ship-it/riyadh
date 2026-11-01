@@ -7,7 +7,7 @@
 }
 
 /* =========================================================
-   1. DESKTOP HEADER (Default: screens > 768px)
+   1. DESKTOP HEADER (> 768px)
    ========================================================= */
 .rc-header-desktop {
   display: block;
@@ -15,60 +15,45 @@
   background-color: #243548;
 }
 
-.rc-header-container {
-  position: relative;
-  width: 100%;
-  max-width: 100%;
+.rc-header-desktop-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
   margin: 0 auto;
-  line-height: 0;
-  overflow: hidden;
-  background-color: #243548;
+  padding: 8px 30px;
+  box-sizing: border-box;
 }
 
-.rc-header-img {
-  width: 100%;
-  height: auto;
-  min-height: 48px;
-  display: block;
+.rc-desktop-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.rc-desktop-logo-link:hover {
+  opacity: 0.9;
+}
+
+.rc-desktop-logo-aamal {
+  height: 48px;
+  width: auto;
   object-fit: contain;
 }
 
-/* Invisible clickable overlay positioning */
-.rc-invisible-link {
-  position: absolute;
-  cursor: pointer;
-  background: transparent;
-  outline: none;
-  border: none;
-  z-index: 10;
-  -webkit-tap-highlight-color: transparent;
+.rc-desktop-logo-chamber {
+  height: 58px;
+  width: auto;
+  object-fit: contain;
 }
 
-/* Link: بوابة أعمالي (left side) */
-.rc-link-aamal {
-  left: 6%;
-  top: 10%;
-  width: 22%;
-  height: 80%;
+.rc-desktop-logo-eservices {
+  height: 54px;
+  width: auto;
+  object-fit: contain;
 }
 
-/* Link: Riyadh Chamber Logo (center) */
-.rc-link-center-logo {
-  left: 40%;
-  top: 5%;
-  width: 20%;
-  height: 90%;
-}
-
-/* Link: E-Services (right side) */
-.rc-link-eservices {
-  right: 6%;
-  top: 10%;
-  width: 24%;
-  height: 80%;
-}
-
-/* Desktop bottom accent line */
 .rc-header-bottom-bar {
   height: 3px;
   width: 100%;
@@ -76,15 +61,15 @@
 }
 
 /* =========================================================
-   2. MOBILE RESPONSIVE HEADER (hidden on desktop)
+   2. MOBILE RESPONSIVE HEADER (<= 768px)
+   Matches user reference screenshot (media_1793556630049_2440a4e9)
    ========================================================= */
 .rc-header-mobile {
   display: none;
   width: 100%;
-  background-color: #223d4e;
+  background-color: #243f52;
 }
 
-/* Media query switch for mobile */
 @media (max-width: 768px) {
   .rc-header-desktop {
     display: none !important;
@@ -92,15 +77,15 @@
 
   .rc-header-mobile {
     display: block !important;
-    background-color: #223d4e;
+    background-color: #243f52;
   }
 
   .rc-mobile-top-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 14px 6px 14px;
-    background-color: #223d4e;
+    padding: 10px 14px 6px 14px;
+    background-color: #243f52;
     direction: ltr;
   }
 
@@ -111,9 +96,9 @@
   }
 
   .rc-mobile-logo-chamber {
-    height: 46px;
+    height: 44px;
     width: auto;
-    max-width: 150px;
+    max-width: 155px;
     object-fit: contain;
     display: block;
   }
@@ -127,15 +112,15 @@
   .rc-mobile-logo-eservices {
     height: 44px;
     width: auto;
-    max-width: 150px;
+    max-width: 155px;
     object-fit: contain;
     display: block;
   }
 
   .rc-mobile-portal-bar {
-    padding: 4px 16px 14px 16px;
+    padding: 2px 14px 12px 14px;
     text-align: left;
-    background-color: #223d4e;
+    background-color: #243f52;
     direction: ltr;
   }
 
@@ -149,13 +134,9 @@
     display: inline-block;
   }
 
-  .rc-mobile-portal-text:hover {
-    color: #ffd659;
-  }
-
   .rc-mobile-bottom-bar {
-    height: 9px;
+    height: 8px;
     width: 100%;
-    background-color: #618398;
+    background-color: #61849a;
   }
 }

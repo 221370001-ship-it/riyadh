@@ -321,10 +321,10 @@ function Footer({ links = FOOTER_LINKS }) {
             href={links.riyadhChamberLogo}
             target="_blank"
             rel="noopener noreferrer"
-            title="غرفة الرياض"
+            title="غرفة الرياض - Riyadh Chamber"
           >
             <img
-              src="/assets/mobile-footer-chamber.png"
+              src="/assets/chamber-logo-tight.png"
               alt="غرفة الرياض - Riyadh Chamber"
               className="rc-mobile-footer-chamber-img"
             />

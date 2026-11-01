@@ -100,24 +100,18 @@ function PublicRecord() {
             <p>لم يتم العثور على المعاملة المطلوبة، يرجى التأكد من صحة الرابط.</p>
           </div>
         ) : (
-          <div className="riyadh-verification-card" dir="rtl">
+          <div className="riyadh-verification-card">
             {/* Card Header Title */}
             <div className="verification-card-header">
-              <h1 className="verification-title">
-                <span className="title-en">Transaction verification:</span>
-                <span className="title-ar">التحقق من المعاملات:</span>
-              </h1>
+              <h1 className="verification-title">Transaction verification:</h1>
               <div className="verification-divider" />
             </div>
 
-            {/* Information Fields List */}
+            {/* Information Fields List - Exact match to reference screenshot */}
             <div className="verification-fields-list">
               {/* Field 1: Organization Name */}
               <div className="verification-field-item">
-                <span className="field-bilingual-label">
-                  <span className="field-label-en">Organization Name</span>
-                  <span className="field-label-ar">اسم المنشأة / </span>
-                </span>
+                <span className="field-label">Organization Name</span>
                 <span className="field-bold-value organization-value">
                   {record.organizationName || '—'}
                 </span>
@@ -125,10 +119,7 @@ function PublicRecord() {
 
               {/* Field 2: National Number */}
               <div className="verification-field-item">
-                <span className="field-bilingual-label">
-                  <span className="field-label-en">National Number</span>
-                  <span className="field-label-ar">الرقم الموحد / </span>
-                </span>
+                <span className="field-label">National Number</span>
                 <span className="field-bold-value">
                   {record.nationalNumber || '—'}
                 </span>
@@ -136,10 +127,7 @@ function PublicRecord() {
 
               {/* Field 3: Member Number */}
               <div className="verification-field-item">
-                <span className="field-bilingual-label">
-                  <span className="field-label-en">Member Number</span>
-                  <span className="field-label-ar">رقم العضوية / </span>
-                </span>
+                <span className="field-label">Member Number</span>
                 <span className="field-bold-value">
                   {record.memberNumber || '—'}
                 </span>
@@ -147,21 +135,15 @@ function PublicRecord() {
 
               {/* Field 4: Document Number */}
               <div className="verification-field-item">
-                <span className="field-bilingual-label">
-                  <span className="field-label-en">Document Number</span>
-                  <span className="field-label-ar">رقم الوثيقة / </span>
-                </span>
+                <span className="field-label">Document Number</span>
                 <span className="field-bold-value">
                   {record.documentNumber || '—'}
                 </span>
               </div>
 
-              {/* Field 5: Status */}
+              {/* Field 5: Document status */}
               <div className="verification-field-item">
-                <span className="field-bilingual-label">
-                  <span className="field-label-en">Document status</span>
-                  <span className="field-label-ar">حالة الوثيقة / </span>
-                </span>
+                <span className="field-label">Document status</span>
                 <div className="status-badge-container">
                   <span
                     className={`verified-status-badge ${
@@ -178,7 +160,7 @@ function PublicRecord() {
               </div>
             </div>
 
-            {/* Letter / خطاب Action Button */}
+            {/* Letter Action Button */}
             <div className="letter-action-container">
               <button
                 type="button"
@@ -186,14 +168,7 @@ function PublicRecord() {
                 onClick={handleLetterClick}
                 disabled={resolvingPdf}
               >
-                {resolvingPdf ? (
-                  'Loading...'
-                ) : (
-                  <>
-                    <span className="btn-label-en">Letter</span>
-                    <span className="btn-label-ar">خطاب / </span>
-                  </>
-                )}
+                {resolvingPdf ? 'Loading...' : 'Letter'}
               </button>
             </div>
           </div>
