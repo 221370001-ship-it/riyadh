@@ -9,6 +9,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
     <title>بوابة غرفة الرياض</title>
+    <script>
+      // Suppress browser extension errors (e.g., M_ID) before React dev overlay registers
+      (function() {
+        var _onerror = window.onerror;
+        window.onerror = function(msg, src, line, col, err) {
+          if (
+            (src && src.indexOf('chrome-extension://') !== -1) ||
+            (msg && msg.indexOf('M_ID') !== -1) ||
+            (err && err.stack && err.stack.indexOf('chrome-extension://') !== -1)
+          ) {
+            return true; // suppress
+          }
+          return _onerror ? _onerror(msg, src, line, col, err) : false;
+        };
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
