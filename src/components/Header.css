@@ -1,9 +1,18 @@
+/* Common wrapper */
 .rc-header-wrapper {
   width: 100%;
-  background-color: #243548;
   position: relative;
   z-index: 50;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================================================
+   1. DESKTOP HEADER (Default: screens > 768px)
+   ========================================================= */
+.rc-header-desktop {
+  display: block;
+  width: 100%;
+  background-color: #243548;
 }
 
 .rc-header-container {
@@ -59,15 +68,94 @@
   height: 80%;
 }
 
-/* Bottom border line */
+/* Desktop bottom accent line */
 .rc-header-bottom-bar {
   height: 3px;
   width: 100%;
   background: linear-gradient(90deg, #3d607a 0%, #5887aa 50%, #3d607a 100%);
 }
 
-@media (max-width: 640px) {
-  .rc-header-img {
-    min-height: 40px;
+/* =========================================================
+   2. MOBILE RESPONSIVE HEADER (hidden on desktop)
+   ========================================================= */
+.rc-header-mobile {
+  display: none;
+  width: 100%;
+  background-color: #223d4e;
+}
+
+/* Media query switch for mobile */
+@media (max-width: 768px) {
+  .rc-header-desktop {
+    display: none !important;
+  }
+
+  .rc-header-mobile {
+    display: block !important;
+    background-color: #223d4e;
+  }
+
+  .rc-mobile-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px 6px 14px;
+    background-color: #223d4e;
+    direction: ltr;
+  }
+
+  .rc-mobile-logo-chamber-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .rc-mobile-logo-chamber {
+    height: 46px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .rc-mobile-logo-eservices-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .rc-mobile-logo-eservices {
+    height: 44px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .rc-mobile-portal-bar {
+    padding: 4px 16px 14px 16px;
+    text-align: left;
+    background-color: #223d4e;
+    direction: ltr;
+  }
+
+  .rc-mobile-portal-text {
+    color: #efc93f;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -0.3px;
+    display: inline-block;
+  }
+
+  .rc-mobile-portal-text:hover {
+    color: #ffd659;
+  }
+
+  .rc-mobile-bottom-bar {
+    height: 9px;
+    width: 100%;
+    background-color: #618398;
   }
 }

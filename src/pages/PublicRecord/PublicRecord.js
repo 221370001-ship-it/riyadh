@@ -103,7 +103,10 @@ function PublicRecord() {
           <div className="riyadh-verification-card" dir="rtl">
             {/* Card Header Title */}
             <div className="verification-card-header">
-              <h1 className="verification-title">التحقق من المعاملات:</h1>
+              <h1 className="verification-title">
+                <span className="title-en">Transaction verification:</span>
+                <span className="title-ar">التحقق من المعاملات:</span>
+              </h1>
               <div className="verification-divider" />
             </div>
 
@@ -112,7 +115,8 @@ function PublicRecord() {
               {/* Field 1: Organization Name */}
               <div className="verification-field-item">
                 <span className="field-bilingual-label">
-                  Organization Name / اسم المنشأة
+                  <span className="field-label-en">Organization Name</span>
+                  <span className="field-label-ar">اسم المنشأة / </span>
                 </span>
                 <span className="field-bold-value organization-value">
                   {record.organizationName || '—'}
@@ -122,9 +126,10 @@ function PublicRecord() {
               {/* Field 2: National Number */}
               <div className="verification-field-item">
                 <span className="field-bilingual-label">
-                  National Number / الرقم الموحد
+                  <span className="field-label-en">National Number</span>
+                  <span className="field-label-ar">الرقم الموحد / </span>
                 </span>
-                <span className="field-bold-value" dir="ltr">
+                <span className="field-bold-value">
                   {record.nationalNumber || '—'}
                 </span>
               </div>
@@ -132,9 +137,10 @@ function PublicRecord() {
               {/* Field 3: Member Number */}
               <div className="verification-field-item">
                 <span className="field-bilingual-label">
-                  Member Number / رقم العضوية
+                  <span className="field-label-en">Member Number</span>
+                  <span className="field-label-ar">رقم العضوية / </span>
                 </span>
-                <span className="field-bold-value" dir="ltr">
+                <span className="field-bold-value">
                   {record.memberNumber || '—'}
                 </span>
               </div>
@@ -142,9 +148,10 @@ function PublicRecord() {
               {/* Field 4: Document Number */}
               <div className="verification-field-item">
                 <span className="field-bilingual-label">
-                  Document Number / رقم الوثيقة
+                  <span className="field-label-en">Document Number</span>
+                  <span className="field-label-ar">رقم الوثيقة / </span>
                 </span>
-                <span className="field-bold-value" dir="ltr">
+                <span className="field-bold-value">
                   {record.documentNumber || '—'}
                 </span>
               </div>
@@ -152,7 +159,8 @@ function PublicRecord() {
               {/* Field 5: Status */}
               <div className="verification-field-item">
                 <span className="field-bilingual-label">
-                  Status / حالة الوثيقة
+                  <span className="field-label-en">Document status</span>
+                  <span className="field-label-ar">حالة الوثيقة / </span>
                 </span>
                 <div className="status-badge-container">
                   <span
@@ -178,7 +186,14 @@ function PublicRecord() {
                 onClick={handleLetterClick}
                 disabled={resolvingPdf}
               >
-                {resolvingPdf ? 'جاري فتح المستند...' : 'خطاب / Letter'}
+                {resolvingPdf ? (
+                  'Loading...'
+                ) : (
+                  <>
+                    <span className="btn-label-en">Letter</span>
+                    <span className="btn-label-ar">خطاب / </span>
+                  </>
+                )}
               </button>
             </div>
           </div>

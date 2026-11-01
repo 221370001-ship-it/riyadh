@@ -24,7 +24,7 @@
   width: 100%;
 }
 
-/* Verification Card - Exact match from screenshot */
+/* Verification Card */
 .riyadh-verification-card {
   background: #ffffff;
   width: 100%;
@@ -53,6 +53,14 @@
   letter-spacing: -0.2px;
 }
 
+.verification-title .title-en {
+  display: inline;
+}
+
+.verification-title .title-ar {
+  display: inline;
+}
+
 .verification-divider {
   width: 100%;
   height: 1px;
@@ -78,7 +86,7 @@
 
 .field-bilingual-label {
   font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 12.5px;
+  font-size: 13px;
   color: #637381;
   font-weight: 400;
   letter-spacing: 0.1px;
@@ -101,7 +109,7 @@
   line-height: 1.45;
 }
 
-/* Status Badge - Exactly matching screenshot: light green border & text */
+/* Status Badge */
 .status-badge-container {
   display: inline-block;
   margin-top: 2px;
@@ -113,14 +121,14 @@
   font-size: 13.5px;
   font-weight: 600;
   border-radius: 4px;
-  padding: 2px 14px;
+  padding: 3px 16px;
   background-color: #ffffff;
   line-height: 1.5;
 }
 
 .verified-status-badge.status-certified {
-  color: #229954;
-  border: 1.5px solid #2ecc71;
+  color: #209d56;
+  border: 1.5px solid #209d56;
 }
 
 .verified-status-badge.status-uncertified {
@@ -212,98 +220,137 @@
   to { transform: rotate(360deg); }
 }
 
-/* --- MOBILE & TABLET RESPONSIVENESS --- */
+/* =========================================================
+   MOBILE RESPONSIVE VERIFICATION CARD (<= 768px)
+   Matches reference screenshot (media_1793553725704_30ba5095)
+   ========================================================= */
 @media (max-width: 768px) {
+  .public-page-wrapper {
+    background-color: #f5f6f8;
+    background-image: none;
+  }
+
   .public-content-container {
-    padding: 24px 12px;
+    padding: 24px 14px 32px 14px;
+    align-items: flex-start;
   }
 
   .riyadh-verification-card {
-    padding: 26px 24px 30px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+    padding: 28px 20px 28px 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 0;
+    text-align: right !important;
+    direction: ltr !important;
+    max-width: 100%;
+  }
+
+  /* Header in mobile matches reference image */
+  .verification-card-header {
+    margin-bottom: 24px;
   }
 
   .verification-title {
-    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #4b738c;
+    margin: 0 0 12px 0;
+    text-align: right;
   }
 
+  /* Hide Arabic parts on mobile to match English mobile screenshot */
+  .verification-title .title-ar {
+    display: none !important;
+  }
+
+  .field-bilingual-label .field-label-ar {
+    display: none !important;
+  }
+
+  .btn-label-ar {
+    display: none !important;
+  }
+
+  .verification-divider {
+    height: 1.5px;
+    background-color: #8fa9ba;
+    width: 100%;
+  }
+
+  /* Fields spacing */
   .verification-fields-list {
-    gap: 14px;
+    gap: 22px;
     margin-top: 18px;
   }
 
+  .verification-field-item {
+    align-items: flex-end;
+    text-align: right;
+    gap: 6px;
+  }
+
   .field-bilingual-label {
-    font-size: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #71828f;
+    font-weight: 400;
+    text-align: right;
   }
 
   .field-bold-value {
-    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000000;
+    text-align: right;
+    line-height: 1.35;
   }
 
   .organization-value {
-    font-size: 15px;
+    font-size: 18px;
+    line-height: 1.35;
   }
 
-  .letter-action-container {
-    margin-top: 26px;
-  }
-
-  .letter-action-btn {
+  /* Status badge on mobile */
+  .status-badge-container {
+    display: flex;
+    justify-content: flex-end;
     width: 100%;
-    max-width: 260px;
-    height: 44px;
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .public-content-container {
-    padding: 16px 10px;
-  }
-
-  .riyadh-verification-card {
-    padding: 20px 16px 24px;
-    border-radius: 4px;
-  }
-
-  .verification-card-header {
-    margin-bottom: 16px;
-  }
-
-  .verification-title {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-
-  .verification-fields-list {
-    gap: 13px;
-    margin-top: 14px;
-  }
-
-  .field-bilingual-label {
-    font-size: 11.5px;
-  }
-
-  .field-bold-value {
-    font-size: 13.5px;
-  }
-
-  .organization-value {
-    font-size: 14px;
   }
 
   .verified-status-badge {
-    font-size: 12.5px;
-    padding: 2px 10px;
+    font-size: 16px;
+    padding: 4px 16px;
+    border-radius: 4px;
+    font-weight: 500;
   }
 
+  .verified-status-badge.status-certified {
+    color: #209d56;
+    border: 1.5px solid #209d56;
+    background-color: #ffffff;
+  }
+
+  /* Letter button on mobile */
   .letter-action-container {
-    margin-top: 22px;
+    margin-top: 28px;
+    width: 100%;
   }
 
   .letter-action-btn {
     width: 100%;
     max-width: 100%;
-    height: 44px;
+    height: 48px;
+    background-color: #63859d;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 4px;
+    box-shadow: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .letter-action-btn:hover {
+    background-color: #557489;
   }
 }

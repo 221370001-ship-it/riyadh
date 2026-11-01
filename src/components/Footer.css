@@ -6,6 +6,16 @@
   margin-top: auto;
 }
 
+/* =========================================================
+   1. DESKTOP FOOTER (> 768px)
+   Preserved exactly as approved with desktop image & overlays
+   ========================================================= */
+.rc-footer-desktop {
+  display: block;
+  width: 100%;
+  background-color: #1e2d4d;
+}
+
 .rc-footer-container {
   position: relative;
   width: 100%;
@@ -35,7 +45,6 @@
 }
 
 /* --- Row 1: Top Nav (Top 0 - 24% of height) --- */
-/* RTL: Right to Left */
 .rc-nav-home {
   right: 21%;
   top: 4%;
@@ -93,7 +102,6 @@
 }
 
 /* --- Row 2: Bottom Section (25% - 100% of height) --- */
-/* Riyadh Chamber Logo on Left */
 .rc-footer-logo {
   left: 10%;
   top: 30%;
@@ -101,7 +109,6 @@
   height: 50%;
 }
 
-/* Phone number 920004565 (center) */
 .rc-footer-phone {
   left: 44%;
   top: 42%;
@@ -109,7 +116,6 @@
   height: 22%;
 }
 
-/* App Store (center bottom) */
 .rc-footer-appstore {
   left: 40%;
   top: 70%;
@@ -117,7 +123,6 @@
   height: 25%;
 }
 
-/* Google Play (center bottom) */
 .rc-footer-googleplay {
   left: 50%;
   top: 70%;
@@ -125,8 +130,6 @@
   height: 25%;
 }
 
-/* Social icons on Right */
-/* Order from left to right: YouTube, LinkedIn, Facebook, Google+, Twitter */
 .rc-social-youtube {
   right: 25.5%;
   top: 30%;
@@ -162,9 +165,156 @@
   height: 28%;
 }
 
+/* =========================================================
+   2. MOBILE RESPONSIVE FOOTER (hidden on desktop)
+   Matches user reference screenshot (media_1793553725705_0f1ab849)
+   ========================================================= */
+.rc-footer-mobile {
+  display: none;
+  width: 100%;
+  background-color: #1e3549;
+  padding: 30px 16px 36px 16px;
+  box-sizing: border-box;
+  text-align: center;
+  color: #ffffff;
+  direction: ltr;
+}
+
 @media (max-width: 768px) {
-  .rc-footer-img {
-    height: 120px;
-    object-fit: cover;
+  .rc-footer-desktop {
+    display: none !important;
+  }
+
+  .rc-footer-mobile {
+    display: block !important;
+  }
+
+  /* Nav Links formatted in centered rows matching reference image */
+  .rc-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .rc-mobile-nav-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px 24px;
+    width: 100%;
+  }
+
+  .rc-mobile-nav-row a {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    transition: color 0.2s;
+  }
+
+  .rc-mobile-nav-row a:hover {
+    color: #ffd659;
+  }
+
+  /* 5 Circular Social Icons in a row */
+  .rc-mobile-social-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 20px 0;
+  }
+
+  .rc-mobile-social-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    color: #ffffff;
+    background: transparent;
+    text-decoration: none;
+    transition: transform 0.2s, background-color 0.2s;
+  }
+
+  .rc-mobile-social-circle:hover {
+    transform: scale(1.08);
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  /* All rights reserved */
+  .rc-mobile-rights {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    font-weight: 400;
+    margin: 0 0 20px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* Inquiries & support title */
+  .rc-mobile-support-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 10px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* 920004565 bold yellow phone number */
+  .rc-mobile-phone-link {
+    color: #efc93f;
+    font-size: 28px;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .rc-mobile-phone-link:hover {
+    color: #ffd659;
+  }
+
+  /* Riyadh Chamber Footer Logo */
+  .rc-mobile-footer-logo-wrapper {
+    margin: 4px auto 26px auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .rc-mobile-footer-chamber-img {
+    height: 52px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* App Badges side-by-side */
+  .rc-mobile-badges-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .rc-mobile-badge-link {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
+  .rc-mobile-badge-img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   }
 }
